@@ -1,0 +1,138 @@
+@model HealthentiaVitalsDashboard.Models.Patient
+
+<h2>@Model.Name – Vitals</h2>
+<p>Room: @Model.RoomNumber | Age: @Model.Age</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Timestamp</th>
+            <th>Heart Rate</th>
+            <th>BP (Systolic/Diastolic)</th>
+            <th>Oxygen Saturation</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var v in Model.VitalSigns.OrderByDescending(v => v.Timestamp))
+        {
+            var status = v.GetStatus();
+            var rowClass = status switch
+            {
+                VitalStatus.Critical => "table-danger",
+                VitalStatus.Warning => "table-warning",
+                _ => "table-success"
+            };
+            <tr class="@rowClass">
+                <td>@v.Timestamp.ToLocalTime().ToString("g")</td>
+                <td>@v.HeartRate</td>
+                <td>@v.BloodPressureSystolic / @v.BloodPressureDiastolic</td>
+                <td>@v.OxygenSaturation %</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Vital Trends</h3>
+
+<canvas id="heartRateChart" height="100"></canvas>
+<canvas id="bloodPressureChart" height="100"></canvas>
+<canvas id="oxygenChart" height="100"></canvas>
+
+<a asp-action="Index" class="btn btn-secondary">Back to list</a>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+
+    <script>
+        const vitals = @Html.Raw(Json.Serialize(Model.VitalSigns.OrderBy(v => v.Timestamp).Select(v => new {
+            timestamp = v.Timestamp,
+            heartRate = v.HeartRate,
+            bloodPressureSystolic = v.BloodPressureSystolic,
+            bloodPressureDiastolic = v.BloodPressureDiastolic,
+            oxygenSaturation = v.OxygenSaturation
+        })));
+
+        const timestamps = vitals.map(v => new Date(v.timestamp).toLocaleTimeString());
+        const heartRates = vitals.map(v => v.heartRate);
+        const systolic = vitals.map(v => v.bloodPressureSystolic);
+        const diastolic = vitals.map(v => v.bloodPressureDiastolic);
+        const oxygen = vitals.map(v => v.oxygenSaturation);
+
+        const heartRateChart = new Chart(document.getElementById("heartRateChart"), {
+            type: 'line',
+            data: {
+                labels: timestamps,
+                datasets: [{
+                    label: 'Heart Rate',
+                    data: heartRates,
+                    borderColor: 'green',
+                    fill: false
+                }]
+            }
+        });
+
+        const bloodPressureChart = new Chart(document.getElementById("bloodPressureChart"), {
+            type: 'line',
+            data: {
+                labels: timestamps,
+                datasets: [
+                    {
+                        label: 'Systolic',
+                        data: systolic,
+                        borderColor: 'blue',
+                        fill: false
+                    },
+                    {
+                        label: 'Diastolic',
+                        data: diastolic,
+                        borderColor: 'purple',
+                        fill: false
+                    }
+                ]
+            }
+        });
+
+        const oxygenChart = new Chart(document.getElementById("oxygenChart"), {
+            type: 'line',
+            data: {
+                labels: timestamps,
+                datasets: [{
+                    label: 'Oxygen Saturation',
+                    data: oxygen,
+                    borderColor: 'orange',
+                    fill: false
+                }]
+            }
+        });
+
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/vitalsHub")
+            .build();
+
+        connection.on("ReceiveVitalUpdate", function (vital) {
+            if (vital.patientId !== @Model.Id) return;
+
+            const time = new Date(vital.timestamp).toLocaleTimeString();
+
+            timestamps.push(time);
+            heartRates.push(vital.heartRate);
+            systolic.push(vital.bloodPressureSystolic);
+            diastolic.push(vital.bloodPressureDiastolic);
+            oxygen.push(vital.oxygenSaturation);
+
+            if (timestamps.length > 10) {
+                timestamps.shift();
+                heartRates.shift();
+                systolic.shift();
+                diastolic.shift();
+                oxygen.shift();
+            }
+
+            heartRateChart.update();
+            bloodPressureChart.update();
+            oxygenChart.update();
+        });
+
+        connection.start().catch(err => console.error(err));
+    </script>
+}

@@ -1,0 +1,24 @@
+@model List<HealthentiaVitalsDashboard.Models.Patient>
+
+<h2>Patients</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Room</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.Name</td>
+                <td>@p.Age</td>
+                <td>@p.RoomNumber</td>
+                <td><a asp-action="Details" asp-route-id="@p.Id" class="btn btn-sm btn-primary">View Vitals</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
