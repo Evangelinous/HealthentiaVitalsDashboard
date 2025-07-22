@@ -3,17 +3,22 @@ using Microsoft.EntityFrameworkCore;
 using HealthentiaVitalsDashboard.Data;
 using Microsoft.AspNetCore.Authorization;
 using HealthentiaVitalsDashboard.Models;
+using HealthentiaVitalsDashboard.Models.Dtos;
+using Microsoft.AspNetCore.SignalR;
+using HealthentiaVitalsDashboard.Hubs;
 
 namespace HealthentiaVitalsDashboard.Controllers;
-[Authorize]
-public class PatientsController : Controller
-{
-    private readonly AppDbContext _context;
 
- 
-    public PatientsController(AppDbContext context)
+    [Authorize]
+    public class PatientsController : Controller
+    {
+        private readonly AppDbContext _context;
+        private readonly IHubContext<VitalSignsHub> _hubContext;
+
+        public PatientsController(AppDbContext context, IHubContext<VitalSignsHub> hubContext)
     {
         _context = context;
+        _hubContext = hubContext;
     }
 
     public async Task<IActionResult> Index()
@@ -63,5 +68,41 @@ public class PatientsController : Controller
 
         ViewBag.Patient = patient; // You can also create a wrapper view model if needed
         return View(viewModel);
+    }
+    
+    [HttpPost("/patients/{id}/vitals")]
+    public async Task<IActionResult> PostVital(int id, [FromBody] VitalSignDto dto)
+    {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+        
+        var patient = await _context.Patients.Include(p => p.VitalSigns).FirstOrDefaultAsync(p => p.Id == id);
+        if (patient == null)
+            return NotFound();
+
+        var vital = new VitalSign
+        {
+            HeartRate = dto.HeartRate,
+            BloodPressureSystolic = dto.BloodPressureSystolic,
+            BloodPressureDiastolic = dto.BloodPressureDiastolic,
+            OxygenSaturation = dto.OxygenSaturation,
+            Timestamp = dto.Timestamp,
+            PatientId = id
+        };
+
+        _context.VitalSigns.Add(vital);
+        await _context.SaveChangesAsync();
+
+        // Notify via SignalR
+        await _hubContext.Clients.Group($"patient-{id}").SendAsync("ReceiveVitalUpdate", new
+        {
+            patientId = id,
+            timestamp = vital.Timestamp,
+            heartRate = vital.HeartRate,
+            bloodPressureSystolic = vital.BloodPressureSystolic,
+            bloodPressureDiastolic = vital.BloodPressureDiastolic,
+            oxygenSaturation = vital.OxygenSaturation
+        });
+
+        return Ok();
     }
 }
