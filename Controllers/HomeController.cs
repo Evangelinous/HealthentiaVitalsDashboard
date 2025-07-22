@@ -1,9 +1,10 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using HealthentiaVitalsDashboard.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HealthentiaVitalsDashboard.Controllers;
-
+[Authorize] 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;

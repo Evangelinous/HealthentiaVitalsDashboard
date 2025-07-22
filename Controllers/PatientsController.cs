@@ -1,13 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HealthentiaVitalsDashboard.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HealthentiaVitalsDashboard.Controllers;
-
+[Authorize]
 public class PatientsController : Controller
 {
     private readonly AppDbContext _context;
 
+ 
     public PatientsController(AppDbContext context)
     {
         _context = context;

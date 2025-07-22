@@ -28,13 +28,13 @@
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HealthentiaVitalsDashboard.80tj259fbh.bundle.scp.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"80tj259fbh"},{"Name":"integrity","Value":"sha256-mN/iwHJJ3wIzO6FtJqbt/FYZyLqE4GALizqYi1GctpE="},{"Name":"label","Value":"_content/HealthentiaVitalsDashboard/HealthentiaVitalsDashboard.bundle.scp.css"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1095"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022mN/iwHJJ3wIzO6FtJqbt/FYZyLqE4GALizqYi1GctpE=\u0022"},{"Name":"Last-Modified","Value":"Tue, 22 Jul 2025 09:47:05 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1095"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022mN/iwHJJ3wIzO6FtJqbt/FYZyLqE4GALizqYi1GctpE=\u0022"},{"Name":"Last-Modified","Value":"Tue, 22 Jul 2025 13:03:31 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/HealthentiaVitalsDashboard/HealthentiaVitalsDashboard.bundle.scp.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HealthentiaVitalsDashboard.80tj259fbh.bundle.scp.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-mN/iwHJJ3wIzO6FtJqbt/FYZyLqE4GALizqYi1GctpE="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1095"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022mN/iwHJJ3wIzO6FtJqbt/FYZyLqE4GALizqYi1GctpE=\u0022"},{"Name":"Last-Modified","Value":"Tue, 22 Jul 2025 09:47:05 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1095"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022mN/iwHJJ3wIzO6FtJqbt/FYZyLqE4GALizqYi1GctpE=\u0022"},{"Name":"Last-Modified","Value":"Tue, 22 Jul 2025 13:03:31 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/HealthentiaVitalsDashboard/js/site.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\site.js'))</AssetFile>

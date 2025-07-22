@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.AspNetCore.Identity.UI.UIFrameworkAttribute("Bootstrap5")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("HealthentiaVitalsDashboard")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fea82c7a1eabd682c779c2f5a9d3043db38a22d7")]
 [assembly: System.Reflection.AssemblyProductAttribute("HealthentiaVitalsDashboard")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HealthentiaVitalsDashboard")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

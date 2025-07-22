@@ -3,9 +3,11 @@
 /Users/lina/HealthentiaVitalsDashboard/obj/Debug/net8.0/HealthentiaVitalsDashboard.AssemblyInfoInputs.cache
 /Users/lina/HealthentiaVitalsDashboard/obj/Debug/net8.0/HealthentiaVitalsDashboard.AssemblyInfo.cs
 /Users/lina/HealthentiaVitalsDashboard/obj/Debug/net8.0/HealthentiaVitalsDashboard.csproj.CoreCompileInputs.cache
+/Users/lina/HealthentiaVitalsDashboard/obj/Debug/net8.0/HealthentiaVitalsDashboard.MvcApplicationPartsAssemblyInfo.cs
 /Users/lina/HealthentiaVitalsDashboard/obj/Debug/net8.0/HealthentiaVitalsDashboard.MvcApplicationPartsAssemblyInfo.cache
 /Users/lina/HealthentiaVitalsDashboard/obj/Debug/net8.0/HealthentiaVitalsDashboard.RazorAssemblyInfo.cache
 /Users/lina/HealthentiaVitalsDashboard/obj/Debug/net8.0/HealthentiaVitalsDashboard.RazorAssemblyInfo.cs
+/Users/lina/HealthentiaVitalsDashboard/obj/Debug/net8.0/HealthentiaVitalsDashboard.sourcelink.json
 /Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/appsettings.Development.json
 /Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/appsettings.json
 /Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/HealthentiaVitalsDashboard.staticwebassets.runtime.json
@@ -16,6 +18,8 @@
 /Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/HealthentiaVitalsDashboard.dll
 /Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/HealthentiaVitalsDashboard.pdb
 /Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/Humanizer.dll
+/Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+/Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/Microsoft.AspNetCore.Identity.UI.dll
 /Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/Microsoft.Bcl.AsyncInterfaces.dll
 /Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/Microsoft.Build.Locator.dll
 /Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/Microsoft.CodeAnalysis.dll
@@ -40,10 +44,14 @@
 /Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/Microsoft.Extensions.Logging.Abstractions.dll
 /Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/Microsoft.Extensions.Options.dll
 /Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/Microsoft.Extensions.Primitives.dll
+/Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/Microsoft.OpenApi.dll
 /Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/Mono.TextTemplating.dll
 /Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/SQLitePCLRaw.batteries_v2.dll
 /Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/SQLitePCLRaw.core.dll
 /Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/SQLitePCLRaw.provider.e_sqlite3.dll
+/Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/Swashbuckle.AspNetCore.Swagger.dll
+/Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+/Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerUI.dll
 /Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/System.CodeDom.dll
 /Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/System.Composition.AttributedModel.dll
 /Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/System.Composition.Convention.dll
