@@ -167,3 +167,11 @@
 /Users/lina/HealthentiaVitalsDashboard/obj/Debug/net8.0/HealthentiaVitalsDashboard.pdb
 /Users/lina/HealthentiaVitalsDashboard/obj/Debug/net8.0/HealthentiaVitalsDashboard.genruntimeconfig.cache
 /Users/lina/HealthentiaVitalsDashboard/obj/Debug/net8.0/ref/HealthentiaVitalsDashboard.dll
+/Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/Microsoft.IdentityModel.Abstractions.dll
+/Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/Microsoft.IdentityModel.Logging.dll
+/Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.dll
+/Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll
+/Users/lina/HealthentiaVitalsDashboard/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll

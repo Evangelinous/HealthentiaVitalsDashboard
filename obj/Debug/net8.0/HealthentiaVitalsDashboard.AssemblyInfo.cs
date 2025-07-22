@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HealthentiaVitalsDashboard")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b97ad44c3d7c12ceeb65dfb7436d7ff7e0102a1b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7e5f97798ce6c879d93b902faa5624f8c6e7d41b")]
 [assembly: System.Reflection.AssemblyProductAttribute("HealthentiaVitalsDashboard")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HealthentiaVitalsDashboard")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

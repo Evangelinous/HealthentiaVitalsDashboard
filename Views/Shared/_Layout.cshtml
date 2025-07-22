@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -27,8 +31,11 @@
                         </li>
                     </ul>
                     <ul class="navbar-nav">
-                        @if (User?.Identity != null && User.Identity.IsAuthenticated)
+                        @if (SignInManager.IsSignedIn(User))
                         {
+                            <li class="nav-item">
+                                <span class="navbar-text me-2">Hello, @UserManager.GetUserName(User)</span>
+                            </li>
                             <li class="nav-item">
                                 <form method="post" asp-area="Identity" asp-page="/Account/Logout">
                                     <button type="submit" class="nav-link btn btn-link">Logout</button>
