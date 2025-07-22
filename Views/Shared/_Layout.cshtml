@@ -34,9 +34,6 @@
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
-                                <span class="navbar-text me-2">Hello, @UserManager.GetUserName(User)</span>
-                            </li>
-                            <li class="nav-item">
                                 <form method="post" asp-area="Identity" asp-page="/Account/Logout">
                                     <button type="submit" class="nav-link btn btn-link">Logout</button>
                                 </form>
@@ -57,7 +54,11 @@
 
     <div class="container">
         <main role="main" class="pb-3">
+            <div>
+                <span class="pb-3">Hello, @UserManager.GetUserName(User)</span>
+            </div>
             @RenderBody()
+
         </main>
     </div>
 
@@ -107,10 +108,7 @@
         </script>
     }
 
-
-
     @await RenderSectionAsync("Scripts", required: false)
-
-    
+ 
 </body>
 </html>
