@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-namespace HealthentiaVitalsDashboard.Models.Dtos
-{
+
+namespace HealthentiaVitalsDashboard.Models.Dtos;
+
     public class VitalSignDto
     {
         [Required]
@@ -18,4 +19,3 @@ namespace HealthentiaVitalsDashboard.Models.Dtos
         [Required]
         public DateTime Timestamp { get; set; }
     }
-}

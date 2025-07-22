@@ -26,7 +26,7 @@ public class VitalSignSimulator : BackgroundService
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
             var patientIds = await db.Patients.Select(p => p.Id).ToListAsync();
-            
+
             if (patientIds.Any())
             {
                 var randomId = patientIds[_random.Next(patientIds.Count)];
@@ -36,7 +36,7 @@ public class VitalSignSimulator : BackgroundService
                 {
                     continue; // Skip if patient not found
                 }
-                
+
                 var vital = new VitalSign
                 {
                     PatientId = patient.Id,
@@ -59,6 +59,41 @@ public class VitalSignSimulator : BackgroundService
                     bloodPressureDiastolic = vital.BloodPressureDiastolic,
                     oxygenSaturation = vital.OxygenSaturation
                 });
+                
+                // Check for critical values and send alert if needed
+                if (vital.GetStatus() == VitalStatus.Critical)
+                {
+                    List<string> criticals = new();
+
+                    if (vital.HeartRate > 120)
+                        criticals.Add($"Heart Rate: {vital.HeartRate} bpm");
+
+                    if (vital.BloodPressureSystolic > 139 || vital.BloodPressureDiastolic > 90)
+                        criticals.Add($"Blood Pressure: {vital.BloodPressureSystolic}/{vital.BloodPressureDiastolic} mmHg");
+
+                    if (vital.OxygenSaturation < 90)
+                        criticals.Add($"Oxygen Saturation: {vital.OxygenSaturation}%");
+
+                    var alert = new
+                    {
+                        patientId = vital.PatientId,
+                        patientName = patient.Name,
+                        room = patient.RoomNumber,
+                        type = "VitalSign",
+                        value = new
+                        {
+                            heartRate = vital.HeartRate,
+                            systolic = vital.BloodPressureSystolic,
+                            diastolic = vital.BloodPressureDiastolic,
+                            oxygenSaturation = vital.OxygenSaturation
+                        },
+                        timestamp = vital.Timestamp,
+                        message = $"⚠️ Critical values for {patient.Name} (Room {patient.RoomNumber}): {string.Join(", ", criticals)}"
+                    };
+
+                    await _hubContext.Clients.All.SendAsync("ReceiveCriticalAlert", alert);
+
+                }
             }
 
             await Task.Delay(5000, stoppingToken); // every 5 seconds

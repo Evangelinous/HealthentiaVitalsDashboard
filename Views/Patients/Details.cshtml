@@ -127,11 +127,8 @@
             }
         });
 
-        const connection = new signalR.HubConnectionBuilder()
-            .withUrl("/vitalsHub")
-            .build();
+        window.signalRConnection.on("ReceiveVitalUpdate", function (vital) {
 
-        connection.on("ReceiveVitalUpdate", function (vital) {
             if (vital.patientId !== @Model.Patient.Id) return;
 
             const time = new Date(vital.timestamp).toLocaleTimeString();
@@ -152,8 +149,17 @@
 
             heartRateChart.update();
             bloodPressureChart.update();
-            oxygenChart.update();
+            oxygenChart.update();ß
         });
+
+        connection.on("ReceiveCriticalAlert", function (alert) {
+
+
+        // Optional: Add fade out after 10 seconds
+        setTimeout(() => alertDiv.remove(), 10000);
+
+        document.body.prepend(alertDiv);
+    });
 
         connection.start().catch(err => console.error(err));
     </script>

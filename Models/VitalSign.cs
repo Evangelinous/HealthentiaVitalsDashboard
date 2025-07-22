@@ -30,6 +30,11 @@ public class VitalSign
         if (warning) return VitalStatus.Warning;
         return VitalStatus.Normal;
     }
+
+    public bool IsCritical()
+    {
+        return GetStatus() == VitalStatus.Critical;
+    }
 }
 
 public enum VitalStatus
@@ -38,3 +43,5 @@ public enum VitalStatus
     Warning,
     Critical
 }
+
+

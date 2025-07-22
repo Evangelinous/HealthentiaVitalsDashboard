@@ -52,6 +52,7 @@
                 </div>
             </div>
         </nav>
+        <div id="alert-container" style="position: fixed; top: 20px; right: 20px; z-index: 9999;"></div>
     </header>
 
     <div class="container">
@@ -72,6 +73,44 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
 
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <script>
+            const connection = new signalR.HubConnectionBuilder()
+                .withUrl("/vitalsHub")
+                .build();
+
+            connection.on("ReceiveCriticalAlert", function (alert) {
+                const alertBox = document.createElement("div");
+                alertBox.className = "alert alert-danger alert-dismissible fade show";
+                alertBox.setAttribute("role", "alert");
+
+                alertBox.innerHTML = `
+                    <a href="/Patients/Details/${alert.patientId}" class="text-decoration-none text-dark fw-bold">
+                        ⚠️ Critical alert for Patient #${alert.patientId}: ${alert.message}
+                    </a>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+
+                document.getElementById("alert-container").appendChild(alertBox);
+
+                setTimeout(() => {
+                    if (alertBox) {
+                        alertBox.classList.remove("show");
+                        alertBox.classList.add("hide");
+                        setTimeout(() => alertBox.remove(), 500);
+                    }
+                }, 8000);
+            });
+
+            connection.start().catch(err => console.error("SignalR Connection Error:", err));
+        </script>
+    }
+
+
+
     @await RenderSectionAsync("Scripts", required: false)
+
+    
 </body>
 </html>

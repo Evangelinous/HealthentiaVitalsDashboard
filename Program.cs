@@ -47,7 +47,7 @@ builder.Services
 
 builder.Services.AddSignalR();
 builder.Services.AddControllersWithViews();
-//builder.Services.AddHostedService<VitalSignSimulator>();
+builder.Services.AddHostedService<VitalSignSimulator>();
 builder.Services.AddRazorPages();
 
 builder.Services.AddEndpointsApiExplorer();

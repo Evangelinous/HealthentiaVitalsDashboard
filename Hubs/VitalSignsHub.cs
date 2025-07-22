@@ -4,6 +4,9 @@ namespace HealthentiaVitalsDashboard.Hubs
 {
     public class VitalSignsHub : Hub
     {
-        // You can leave this empty for now.
+        public async Task SendCriticalAlert(object alert)
+        {
+            await Clients.All.SendAsync("ReceiveCriticalAlert", alert);
+        }
     }
 }
