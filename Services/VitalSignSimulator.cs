@@ -32,6 +32,11 @@ public class VitalSignSimulator : BackgroundService
                 var randomId = patientIds[_random.Next(patientIds.Count)];
                 var patient = await db.Patients.FindAsync(randomId);
 
+                if (patient == null)
+                {
+                    continue; // Skip if patient not found
+                }
+                
                 var vital = new VitalSign
                 {
                     PatientId = patient.Id,

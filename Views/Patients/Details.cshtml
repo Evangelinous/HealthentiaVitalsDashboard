@@ -1,7 +1,18 @@
-@model HealthentiaVitalsDashboard.Models.Patient
+@model HealthentiaVitalsDashboard.Models.VitalSignsViewModel
 
-<h2>@Model.Name – Vitals</h2>
-<p>Room: @Model.RoomNumber | Age: @Model.Age</p>
+<h2>@Model.Patient.Name – Vitals</h2>
+<p>Room: @Model.Patient.RoomNumber | Age: @Model.Patient.Age</p>
+
+<form asp-action="Details" method="get" class="mb-3">
+    <input type="hidden" name="id" value="@Model.Patient.Id" />
+    <input type="hidden" name="page" value="1" />
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="last24h" value="true" id="last24hCheckbox" @(@Model.FilterLast24h ? "checked" : "") onchange="this.form.submit();" />
+        <label class="form-check-label" for="last24hCheckbox">
+            Show only last 24 hours
+        </label>
+    </div>
+</form>
 
 <table class="table table-striped">
     <thead>
@@ -13,7 +24,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var v in Model.VitalSigns.OrderByDescending(v => v.Timestamp))
+        @foreach (var v in Model.VitalSigns)
         {
             var status = v.GetStatus();
             var rowClass = status switch
@@ -31,6 +42,17 @@
         }
     </tbody>
 </table>
+
+<nav>
+    <ul class="pagination">
+        @for (int i = 1; i <= @Model.TotalPages; i++)
+        {
+            <li class="page-item @(i == @Model.CurrentPage ? "active" : "")">
+                <a class="page-link" asp-action="Details" asp-route-id="@Model.Patient.Id" asp-route-page="@i" asp-route-last24h="@Model.FilterLast24h">@i</a>
+            </li>
+        }
+    </ul>
+</nav>
 
 <h3>Vital Trends</h3>
 
@@ -110,7 +132,7 @@
             .build();
 
         connection.on("ReceiveVitalUpdate", function (vital) {
-            if (vital.patientId !== @Model.Id) return;
+            if (vital.patientId !== @Model.Patient.Id) return;
 
             const time = new Date(vital.timestamp).toLocaleTimeString();
 
