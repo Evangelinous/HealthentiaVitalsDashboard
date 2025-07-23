@@ -1,70 +1,88 @@
 @model HealthentiaVitalsDashboard.Models.VitalSignsViewModel
 
-<h2>@Model.Patient.Name – Vitals</h2>
-<p>Room: @Model.Patient.RoomNumber | Age: @Model.Patient.Age</p>
-
-<form asp-action="Details" method="get" class="mb-3">
-    <input type="hidden" name="id" value="@Model.Patient.Id" />
-    <input type="hidden" name="page" value="1" />
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="last24h" value="true" id="last24hCheckbox" @(@Model.FilterLast24h ? "checked" : "") onchange="this.form.submit();" />
-        <label class="form-check-label" for="last24hCheckbox">
-            Show only last 24 hours
-        </label>
+<div class="container">
+    <div class="mb-4">
+        <h2 class="display-5 fw-semibold text-primary">@Model.Patient.Name’s Vitals</h2>
+        <p class="text-muted">Room: <strong>@Model.Patient.RoomNumber</strong> | Age: <strong>@Model.Patient.Age</strong></p>
     </div>
-</form>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Timestamp</th>
-            <th>Heart Rate</th>
-            <th>BP (Systolic/Diastolic)</th>
-            <th>Oxygen Saturation</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var v in Model.VitalSigns)
-        {
-            var status = v.GetStatus();
-            var rowClass = status switch
+    <form asp-action="Details" method="get" class="mb-4">
+        <input type="hidden" name="id" value="@Model.Patient.Id" />
+        <input type="hidden" name="page" value="1" />
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="last24h" value="true" id="last24hCheckbox" @(@Model.FilterLast24h ? "checked" : "") onchange="this.form.submit();" />
+            <label class="form-check-label" for="last24hCheckbox">
+                Show only last 24 hours
+            </label>
+        </div>
+    </form>
+
+    <div class="card mb-5 shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">📋 Vitals Table</h5>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-hover table-bordered mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">🕒 Timestamp</th>
+                        <th scope="col">❤️ Heart Rate</th>
+                        <th scope="col">🩸 BP (Sys/Dia)</th>
+                        <th scope="col">🫁 O<sub>2</sub> Saturation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var v in Model.VitalSigns)
+                    {
+                        var status = v.GetStatus();
+                        var rowClass = status switch
+                        {
+                            VitalStatus.Critical => "table-danger",
+                            VitalStatus.Warning => "table-warning",
+                            _ => "table-success"
+                        };
+                        <tr class="@rowClass">
+                            <td>@v.Timestamp.ToLocalTime().ToString("g")</td>
+                            <td>@v.HeartRate</td>
+                            <td>@v.BloodPressureSystolic / @v.BloodPressureDiastolic</td>
+                            <td>@v.OxygenSaturation %</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <nav class="mb-5">
+        <ul class="pagination justify-content-center">
+            @for (int i = 1; i <= @Model.TotalPages; i++)
             {
-                VitalStatus.Critical => "table-danger",
-                VitalStatus.Warning => "table-warning",
-                _ => "table-success"
-            };
-            <tr class="@rowClass">
-                <td>@v.Timestamp.ToLocalTime().ToString("g")</td>
-                <td>@v.HeartRate</td>
-                <td>@v.BloodPressureSystolic / @v.BloodPressureDiastolic</td>
-                <td>@v.OxygenSaturation %</td>
-            </tr>
-        }
-    </tbody>
-</table>
+                <li class="page-item @(i == @Model.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-action="Details" asp-route-id="@Model.Patient.Id" asp-route-page="@i" asp-route-last24h="@Model.FilterLast24h">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
 
-<nav>
-    <ul class="pagination">
-        @for (int i = 1; i <= @Model.TotalPages; i++)
-        {
-            <li class="page-item @(i == @Model.CurrentPage ? "active" : "")">
-                <a class="page-link" asp-action="Details" asp-route-id="@Model.Patient.Id" asp-route-page="@i" asp-route-last24h="@Model.FilterLast24h">@i</a>
-            </li>
-        }
-    </ul>
-</nav>
+    <div class="mb-5">
+        <h3 class="mb-4 text-secondary">📊 Vital Sign Trends</h3>
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                <canvas id="heartRateChart" height="100"></canvas>
+            </div>
+            <div class="col-md-12 mb-4">
+                <canvas id="bloodPressureChart" height="100"></canvas>
+            </div>
+            <div class="col-md-12 mb-4">
+                <canvas id="oxygenChart" height="100"></canvas>
+            </div>
+        </div>
+    </div>
 
-<h3>Vital Trends</h3>
-
-<canvas id="heartRateChart" height="100"></canvas>
-<canvas id="bloodPressureChart" height="100"></canvas>
-<canvas id="oxygenChart" height="100"></canvas>
-
-<a asp-action="Index" class="btn btn-secondary">Back to list</a>
+    <a asp-action="Index" class="btn btn-outline-secondary">← Back to Patient List</a>
+</div>
 
 @section Scripts {
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
-
     <script>
         const vitals = @Html.Raw(Json.Serialize(Model.VitalSigns.OrderBy(v => v.Timestamp).Select(v => new {
             timestamp = v.Timestamp,
@@ -88,7 +106,7 @@
                     label: 'Heart Rate',
                     data: heartRates,
                     borderColor: 'green',
-                    fill: false
+                    tension: 0.4
                 }]
             }
         });
@@ -102,13 +120,13 @@
                         label: 'Systolic',
                         data: systolic,
                         borderColor: 'blue',
-                        fill: false
+                        tension: 0.4
                     },
                     {
                         label: 'Diastolic',
                         data: diastolic,
                         borderColor: 'purple',
-                        fill: false
+                        tension: 0.4
                     }
                 ]
             }
@@ -122,13 +140,12 @@
                     label: 'Oxygen Saturation',
                     data: oxygen,
                     borderColor: 'orange',
-                    fill: false
+                    tension: 0.4
                 }]
             }
         });
 
         window.signalRConnection.on("ReceiveVitalUpdate", function (vital) {
-
             if (vital.patientId !== @Model.Patient.Id) return;
 
             const time = new Date(vital.timestamp).toLocaleTimeString();
@@ -149,18 +166,21 @@
 
             heartRateChart.update();
             bloodPressureChart.update();
-            oxygenChart.update();ß
+            oxygenChart.update();
         });
 
-        connection.on("ReceiveCriticalAlert", function (alert) {
+        window.signalRConnection.on("ReceiveCriticalAlert", function (alert) {
+            if (alert.patientId !== @Model.Patient.Id) return;
 
-
-        // Optional: Add fade out after 10 seconds
-        setTimeout(() => alertDiv.remove(), 10000);
-
-        document.body.prepend(alertDiv);
-    });
-
-        connection.start().catch(err => console.error(err));
+            const alertDiv = document.createElement("div");
+            alertDiv.className = "alert alert-danger position-fixed top-0 end-0 m-4 shadow";
+            alertDiv.innerHTML = `
+                <strong>⚠️ Critical Alert:</strong> ${alert.message} <br />
+                <small>${new Date(alert.timestamp).toLocaleString()}</small>
+                <button type="button" class="btn-close float-end" onclick="this.parentElement.remove()"></button>
+            `;
+            document.body.appendChild(alertDiv);
+            setTimeout(() => alertDiv.remove(), 10000);
+        });
     </script>
 }

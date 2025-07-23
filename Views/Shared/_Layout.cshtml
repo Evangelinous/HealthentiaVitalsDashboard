@@ -16,26 +16,38 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">HealthentiaVitalsDashboard</a>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <a class="navbar-brand" asp-area="" asp-controller="Patients" asp-action="Index">
+                        HealthentiaVitalsDashboard
+                    </a>
+                }
+                else
+                {
+                    <a class="navbar-brand" asp-area="Identity" asp-page="/Account/Login">
+                        HealthentiaVitalsDashboard
+                    </a>
+                }
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Patients" asp-action="Index">Patients</a>
+                            </li>
+                        }
                     </ul>
                     <ul class="navbar-nav">
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
                                 <form method="post" asp-area="Identity" asp-page="/Account/Logout">
-                                    <button type="submit" class="nav-link btn btn-link">Logout</button>
+                                    <button type="submit" class="btn btn-link nav-link">Logout</button>
                                 </form>
                             </li>
                         }
@@ -43,6 +55,9 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
                             </li>
                         }
                     </ul>
@@ -54,15 +69,11 @@
 
     <div class="container">
         <main role="main" class="pb-3">
-            <div>
-                <span class="pb-3">Hello, @UserManager.GetUserName(User)</span>
-            </div>
             @RenderBody()
-
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted mt-5">
         <div class="container">
             &copy; 2025 - HealthentiaVitalsDashboard - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
@@ -109,6 +120,5 @@
     }
 
     @await RenderSectionAsync("Scripts", required: false)
- 
 </body>
 </html>
