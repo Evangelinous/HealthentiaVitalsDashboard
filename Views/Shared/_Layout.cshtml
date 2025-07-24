@@ -91,6 +91,8 @@
             const connection = new signalR.HubConnectionBuilder()
                 .withUrl("/vitalsHub")
                 .build();
+            
+            window.signalRConnection = connection;
 
             connection.on("ReceiveCriticalAlert", function (alert) {
                 const alertBox = document.createElement("div");

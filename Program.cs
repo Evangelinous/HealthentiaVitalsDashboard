@@ -67,6 +67,15 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.ReturnUrlParameter = "returnUrl";
 });
 
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
+});
+
 // Build app
 var app = builder.Build();
 

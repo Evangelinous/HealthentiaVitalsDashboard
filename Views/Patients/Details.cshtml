@@ -53,16 +53,55 @@
         </div>
     </div>
 
-    <nav class="mb-5">
-        <ul class="pagination justify-content-center">
-            @for (int i = 1; i <= @Model.TotalPages; i++)
-            {
-                <li class="page-item @(i == @Model.CurrentPage ? "active" : "")">
-                    <a class="page-link" asp-action="Details" asp-route-id="@Model.Patient.Id" asp-route-page="@i" asp-route-last24h="@Model.FilterLast24h">@i</a>
-                </li>
-            }
-        </ul>
-    </nav>
+    @{
+    int totalPages = Model.TotalPages;
+    int currentPage = Model.CurrentPage;
+
+    int maxVisible = 10;
+    int startPage = Math.Max(1, currentPage - maxVisible / 2);
+    int endPage = Math.Min(totalPages, startPage + maxVisible - 1);
+
+    if (endPage - startPage < maxVisible)
+    {
+        startPage = Math.Max(1, endPage - maxVisible + 1);
+    }
+}
+
+<nav class="mb-5">
+    <ul class="pagination justify-content-center">
+
+        <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+            <a class="page-link" asp-action="Details"
+               asp-route-id="@Model.Patient.Id"
+               asp-route-page="@(currentPage - 1)"
+               asp-route-last24h="@Model.FilterLast24h">
+                ← Prev
+            </a>
+        </li>
+
+        @for (int i = startPage; i <= endPage; i++)
+        {
+            <li class="page-item @(i == currentPage ? "active" : "")">
+                <a class="page-link" asp-action="Details"
+                   asp-route-id="@Model.Patient.Id"
+                   asp-route-page="@i"
+                   asp-route-last24h="@Model.FilterLast24h">
+                    @i
+                </a>
+            </li>
+        }
+
+        <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+            <a class="page-link" asp-action="Details"
+               asp-route-id="@Model.Patient.Id"
+               asp-route-page="@(currentPage + 1)"
+               asp-route-last24h="@Model.FilterLast24h">
+                Next →
+            </a>
+        </li>
+
+    </ul>
+</nav>
 
     <div class="mb-5">
         <h3 class="mb-4 text-secondary">📊 Vital Sign Trends</h3>
@@ -167,6 +206,35 @@
             heartRateChart.update();
             bloodPressureChart.update();
             oxygenChart.update();
+
+            const row = document.createElement("tr");
+
+            // Optional: compute status to apply row class (copy logic from server)
+            let rowClass = "";
+            if (vital.heartRate > 120 || vital.bloodPressureSystolic > 139 || vital.bloodPressureDiastolic > 90 || vital.oxygenSaturation < 90) {
+                rowClass = "table-danger";
+            } else if (vital.heartRate > 100 || vital.bloodPressureSystolic > 130 || vital.oxygenSaturation < 95) {
+                rowClass = "table-warning";
+            } else {
+                rowClass = "table-success";
+            }
+
+            row.className = rowClass;
+
+            row.innerHTML = `
+                <td>${new Date(vital.timestamp).toLocaleString()}</td>
+                <td>${vital.heartRate}</td>
+                <td>${vital.bloodPressureSystolic} / ${vital.bloodPressureDiastolic}</td>
+                <td>${vital.oxygenSaturation} %</td>
+            `;
+
+            const tableBody = document.querySelector("table tbody");
+            if (tableBody) {
+                tableBody.insertBefore(row, tableBody.firstChild);
+                if (tableBody.rows.length > 10) {
+                    tableBody.deleteRow(tableBody.rows.length - 1);
+                }
+            }
         });
 
         window.signalRConnection.on("ReceiveCriticalAlert", function (alert) {

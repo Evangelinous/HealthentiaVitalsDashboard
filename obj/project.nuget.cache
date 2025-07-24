@@ -162,9 +162,9 @@
     "/Users/lina/.nuget/packages/system.text.json/9.0.7/system.text.json.9.0.7.nupkg.sha512",
     "/Users/lina/.nuget/packages/system.threading.channels/7.0.0/system.threading.channels.7.0.0.nupkg.sha512",
     "/Users/lina/.nuget/packages/system.threading.tasks.dataflow/8.0.0/system.threading.tasks.dataflow.8.0.0.nupkg.sha512",
+    "/Users/lina/.nuget/packages/microsoft.netcore.app.ref/8.0.11/microsoft.netcore.app.ref.8.0.11.nupkg.sha512",
     "/Users/lina/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.11/microsoft.aspnetcore.app.ref.8.0.11.nupkg.sha512",
-    "/Users/lina/.nuget/packages/microsoft.netcore.app.host.osx-arm64/8.0.11/microsoft.netcore.app.host.osx-arm64.8.0.11.nupkg.sha512",
-    "/Users/lina/.nuget/packages/microsoft.netcore.app.ref/8.0.11/microsoft.netcore.app.ref.8.0.11.nupkg.sha512"
+    "/Users/lina/.nuget/packages/microsoft.netcore.app.host.osx-arm64/8.0.11/microsoft.netcore.app.host.osx-arm64.8.0.11.nupkg.sha512"
   ],
   "logs": []
 }
