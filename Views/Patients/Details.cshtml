@@ -48,7 +48,7 @@
                             _ => "table-success"
                         };
                         <tr class="@rowClass">
-                            <td>@v.Timestamp.ToLocalTime().ToString("g")</td>
+                            <td>@v.Timestamp.ToLocalTime().ToString("dd/MM/yyyy HH:mm:ss")</td>
                             <td>@v.HeartRate</td>
                             <td>@v.BloodPressureSystolic / @v.BloodPressureDiastolic</td>
                             <td>@v.OxygenSaturation %</td>
@@ -215,20 +215,21 @@
 
             const row = document.createElement("tr");
 
-            // Optional: compute status to apply row class (copy logic from server)
             let rowClass = "";
-            if (vital.heartRate > 120 || vital.bloodPressureSystolic > 139 || vital.bloodPressureDiastolic > 90 || vital.oxygenSaturation < 90) {
-                rowClass = "table-danger";
-            } else if (vital.heartRate > 100 || vital.bloodPressureSystolic > 130 || vital.oxygenSaturation < 95) {
-                rowClass = "table-warning";
-            } else {
-                rowClass = "table-success";
-            }
+            if (vital.HeartRate > 120)
+                criticals.Add($"Heart Rate: {vital.HeartRate} bpm");
+
+            if (vital.BloodPressureSystolic > 139 || vital.BloodPressureDiastolic > 90)
+                criticals.Add($"Blood Pressure: {vital.BloodPressureSystolic}/{vital.BloodPressureDiastolic} mmHg");
+
+            if (vital.OxygenSaturation < 90)
+                criticals.Add($"Oxygen Saturation: {vital.OxygenSaturation}%");
+
 
             row.className = rowClass;
 
             row.innerHTML = `
-                <td>${new Date(vital.timestamp).toLocaleString()}</td>
+                <td>${new Date(vital.timestamp).ToLocalTime().ToString("dd/MM/yyyy HH:mm:ss")}</td>
                 <td>${vital.heartRate}</td>
                 <td>${vital.bloodPressureSystolic} / ${vital.bloodPressureDiastolic}</td>
                 <td>${vital.oxygenSaturation} %</td>
