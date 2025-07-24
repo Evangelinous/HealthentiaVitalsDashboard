@@ -3,9 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using HealthentiaVitalsDashboard.Data;
 using Microsoft.AspNetCore.Authorization;
 using HealthentiaVitalsDashboard.Models;
-using HealthentiaVitalsDashboard.Models.Dtos;
-using Microsoft.AspNetCore.SignalR;
-using HealthentiaVitalsDashboard.Hubs;
+using System.Text;
 
 namespace HealthentiaVitalsDashboard.Controllers;
 
@@ -69,4 +67,28 @@ public class PatientsController : Controller
         ViewBag.Patient = patient; // You can also create a wrapper view model if needed
         return View(viewModel);
     }
+
+    [HttpGet]
+public async Task<IActionResult> ExportVitalsToCsv(int id)
+{
+    var patient = await _context.Patients
+        .Include(p => p.VitalSigns)
+        .FirstOrDefaultAsync(p => p.Id == id);
+
+    if (patient == null || patient.VitalSigns == null || !patient.VitalSigns.Any())
+        return NotFound("No vitals found for this patient.");
+
+    var builder = new StringBuilder();
+    builder.AppendLine("Timestamp,HeartRate,BloodPressureSystolic,BloodPressureDiastolic,OxygenSaturation");
+
+    foreach (var v in patient.VitalSigns.OrderBy(v => v.Timestamp))
+    {
+        builder.AppendLine($"{v.Timestamp:u},{v.HeartRate},{v.BloodPressureSystolic},{v.BloodPressureDiastolic},{v.OxygenSaturation}");
+    }
+
+    var csvBytes = Encoding.UTF8.GetBytes(builder.ToString());
+    var filename = $"vital_signs_patient_{id}.csv";
+
+    return File(csvBytes, "text/csv", filename);
+}
 }
