@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,8 +56,37 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "Vitals API",
-        Version = "v1"
+        Title = "Healthentia API",
+        Version = "v1",
+        Description = "API for managing patient vitals and authentication"
+    });
+
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
+
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
     });
 });
 
@@ -82,20 +112,13 @@ var app = builder.Build();
 // Run database seeding
 DatabaseSeeder.Seed(app.Services);
 
-// Middleware pipeline
-if (!app.Environment.IsDevelopment())
+
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
-}
-else
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Vitals API V1");
-    });
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Vitals API V1");
+});
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

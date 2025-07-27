@@ -126,7 +126,6 @@
 
     <a asp-action="Index" class="btn btn-outline-secondary">← Back to Patient List</a>
 </div>
-
 @section Scripts {
     <script>
         const vitals = @Html.Raw(Json.Serialize(Model.VitalSigns.OrderBy(v => v.Timestamp).Select(v => new {
@@ -190,6 +189,8 @@
             }
         });
 
+        window.signalRConnection.start().catch(err => console.error("SignalR connection failed:", err.toString()));
+
         window.signalRConnection.on("ReceiveVitalUpdate", function (vital) {
             if (vital.patientId !== @Model.Patient.Id) return;
 
@@ -216,20 +217,16 @@
             const row = document.createElement("tr");
 
             let rowClass = "";
-            if (vital.HeartRate > 120)
-                criticals.Add($"Heart Rate: {vital.HeartRate} bpm");
-
-            if (vital.BloodPressureSystolic > 139 || vital.BloodPressureDiastolic > 90)
-                criticals.Add($"Blood Pressure: {vital.BloodPressureSystolic}/{vital.BloodPressureDiastolic} mmHg");
-
-            if (vital.OxygenSaturation < 90)
-                criticals.Add($"Oxygen Saturation: {vital.OxygenSaturation}%");
-
+            if (vital.heartRate > 120) rowClass = "table-danger";
+            else if (vital.bloodPressureSystolic > 139 || vital.bloodPressureDiastolic > 90 || vital.oxygenSaturation < 90)
+                rowClass = "table-warning";
+            else
+                rowClass = "table-success";
 
             row.className = rowClass;
 
             row.innerHTML = `
-                <td>${new Date(vital.timestamp).ToLocalTime().ToString("dd/MM/yyyy HH:mm:ss")}</td>
+                <td>${new Date(vital.timestamp).toLocaleString()}</td>
                 <td>${vital.heartRate}</td>
                 <td>${vital.bloodPressureSystolic} / ${vital.bloodPressureDiastolic}</td>
                 <td>${vital.oxygenSaturation} %</td>
@@ -242,20 +239,6 @@
                     tableBody.deleteRow(tableBody.rows.length - 1);
                 }
             }
-        });
-
-        window.signalRConnection.on("ReceiveCriticalAlert", function (alert) {
-            if (alert.patientId !== @Model.Patient.Id) return;
-
-            const alertDiv = document.createElement("div");
-            alertDiv.className = "alert alert-danger position-fixed top-0 end-0 m-4 shadow";
-            alertDiv.innerHTML = `
-                <strong>⚠️ Critical Alert:</strong> ${alert.message} <br />
-                <small>${new Date(alert.timestamp).toLocaleString()}</small>
-                <button type="button" class="btn-close float-end" onclick="this.parentElement.remove()"></button>
-            `;
-            document.body.appendChild(alertDiv);
-            setTimeout(() => alertDiv.remove(), 10000);
         });
     </script>
 }

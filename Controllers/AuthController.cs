@@ -6,7 +6,6 @@ using System.Security.Claims;
 using System.Text;
 namespace HealthentiaVitalsDashboard.Models;
 
-
 [ApiController]
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
@@ -22,6 +21,15 @@ public class AuthController : ControllerBase
         _config = config;
     }
 
+    /// <summary>
+    /// Authenticates a user based on email and password, and returns a JSON Web Token (JWT) if successful.
+    /// </summary>
+    /// <param name="request">The login request containing the user's email and password.</param>
+    /// <returns>
+    /// Returns <see cref="OkObjectResult"/> with a JWT token if credentials are valid,
+    /// <see cref="BadRequestObjectResult"/> if the request is invalid,
+    /// or <see cref="UnauthorizedResult"/> if authentication fails.
+    /// </returns>
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
@@ -41,29 +49,29 @@ public class AuthController : ControllerBase
     }
 
     private string GenerateJwtToken(IdentityUser user)
-{
-    var keyString = _config["Jwt:Key"];
-    if (string.IsNullOrEmpty(keyString) || keyString.Length < 32)
-        throw new Exception("JWT key must be at least 32 characters long.");
-
-    var claims = new[]
     {
-        new Claim(ClaimTypes.Name, user.UserName ?? string.Empty),
-        new Claim(JwtRegisteredClaimNames.Email, user.Email ?? string.Empty),
-        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-    };
+        var keyString = _config["Jwt:Key"];
+        if (string.IsNullOrEmpty(keyString) || keyString.Length < 32)
+            throw new Exception("JWT key must be at least 32 characters long.");
 
-    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(keyString));
-    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        var claims = new[]
+        {
+            new Claim(ClaimTypes.Name, user.UserName ?? string.Empty),
+            new Claim(JwtRegisteredClaimNames.Email, user.Email ?? string.Empty),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
 
-    var token = new JwtSecurityToken(
-        issuer: _config["Jwt:Issuer"],
-        audience: _config["Jwt:Audience"],
-        claims: claims,
-        expires: DateTime.UtcNow.AddHours(1),
-        signingCredentials: creds
-    );
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(keyString));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-    return new JwtSecurityTokenHandler().WriteToken(token);
-}
+        var token = new JwtSecurityToken(
+            issuer: _config["Jwt:Issuer"],
+            audience: _config["Jwt:Audience"],
+            claims: claims,
+            expires: DateTime.UtcNow.AddHours(1),
+            signingCredentials: creds
+        );
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
 }

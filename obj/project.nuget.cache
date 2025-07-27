@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "CMQ7ILG4g8s=",
+  "dgSpecHash": "ST0ZEVZKrks=",
   "success": true,
   "projectFilePath": "/Users/lina/HealthentiaVitalsDashboard/HealthentiaVitalsDashboard.csproj",
   "expectedPackageFiles": [
@@ -86,6 +86,7 @@
     "/Users/lina/.nuget/packages/microsoft.entityframeworkcore.abstractions/9.0.7/microsoft.entityframeworkcore.abstractions.9.0.7.nupkg.sha512",
     "/Users/lina/.nuget/packages/microsoft.entityframeworkcore.analyzers/9.0.7/microsoft.entityframeworkcore.analyzers.9.0.7.nupkg.sha512",
     "/Users/lina/.nuget/packages/microsoft.entityframeworkcore.design/9.0.7/microsoft.entityframeworkcore.design.9.0.7.nupkg.sha512",
+    "/Users/lina/.nuget/packages/microsoft.entityframeworkcore.inmemory/9.0.7/microsoft.entityframeworkcore.inmemory.9.0.7.nupkg.sha512",
     "/Users/lina/.nuget/packages/microsoft.entityframeworkcore.relational/9.0.7/microsoft.entityframeworkcore.relational.9.0.7.nupkg.sha512",
     "/Users/lina/.nuget/packages/microsoft.entityframeworkcore.sqlite/9.0.7/microsoft.entityframeworkcore.sqlite.9.0.7.nupkg.sha512",
     "/Users/lina/.nuget/packages/microsoft.entityframeworkcore.sqlite.core/9.0.7/microsoft.entityframeworkcore.sqlite.core.9.0.7.nupkg.sha512",

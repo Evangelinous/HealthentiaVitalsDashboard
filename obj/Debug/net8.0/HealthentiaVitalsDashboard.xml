@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>HealthentiaVitalsDashboard</name>
+    </assembly>
+    <members>
+        <member name="P:HealthentiaVitalsDashboard.Areas.Identity.Pages.Account.ForgotPasswordModel.Input">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:HealthentiaVitalsDashboard.Areas.Identity.Pages.Account.ForgotPasswordModel.InputModel">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:HealthentiaVitalsDashboard.Areas.Identity.Pages.Account.ForgotPasswordModel.InputModel.Email">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:HealthentiaVitalsDashboard.Areas.Identity.Pages.Account.LoginModel.Input">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:HealthentiaVitalsDashboard.Areas.Identity.Pages.Account.LoginModel.ExternalLogins">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:HealthentiaVitalsDashboard.Areas.Identity.Pages.Account.LoginModel.ReturnUrl">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:HealthentiaVitalsDashboard.Areas.Identity.Pages.Account.LoginModel.ErrorMessage">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:HealthentiaVitalsDashboard.Areas.Identity.Pages.Account.LoginModel.InputModel">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:HealthentiaVitalsDashboard.Areas.Identity.Pages.Account.LoginModel.InputModel.Email">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:HealthentiaVitalsDashboard.Areas.Identity.Pages.Account.LoginModel.InputModel.Password">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:HealthentiaVitalsDashboard.Areas.Identity.Pages.Account.LoginModel.InputModel.RememberMe">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:HealthentiaVitalsDashboard.Areas.Identity.Pages.Account.RegisterModel.Input">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:HealthentiaVitalsDashboard.Areas.Identity.Pages.Account.RegisterModel.ReturnUrl">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:HealthentiaVitalsDashboard.Areas.Identity.Pages.Account.RegisterModel.ExternalLogins">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:HealthentiaVitalsDashboard.Areas.Identity.Pages.Account.RegisterModel.InputModel">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:HealthentiaVitalsDashboard.Areas.Identity.Pages.Account.RegisterModel.InputModel.Email">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:HealthentiaVitalsDashboard.Areas.Identity.Pages.Account.RegisterModel.InputModel.Password">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:HealthentiaVitalsDashboard.Areas.Identity.Pages.Account.RegisterModel.InputModel.ConfirmPassword">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:HealthentiaVitalsDashboard.Models.AuthController.Login(HealthentiaVitalsDashboard.Models.LoginRequest)">
+            <summary>
+            Authenticates a user based on email and password, and returns a JSON Web Token (JWT) if successful.
+            </summary>
+            <param name="request">The login request containing the user's email and password.</param>
+            <returns>
+            Returns <see cref="T:Microsoft.AspNetCore.Mvc.OkObjectResult"/> with a JWT token if credentials are valid,
+            <see cref="T:Microsoft.AspNetCore.Mvc.BadRequestObjectResult"/> if the request is invalid,
+            or <see cref="T:Microsoft.AspNetCore.Mvc.UnauthorizedResult"/> if authentication fails.
+            </returns>
+        </member>
+        <member name="T:HealthentiaVitalsDashboard.Controllers.PatientVitalsController">
+            <summary>
+            Controller responsible for handling vital sign submissions for patients.
+            </summary>
+            <remarks>
+            Requires JWT Bearer authentication to access endpoints.
+            </remarks>
+        </member>
+        <member name="M:HealthentiaVitalsDashboard.Controllers.PatientVitalsController.PostVital(System.Int32,HealthentiaVitalsDashboard.Models.Dtos.VitalSignDto)">
+            <summary>
+            Submits a new vital sign record for a specific patient.
+            </summary>
+            <param name="id">The ID of the patient to whom the vital sign belongs.</param>
+            <param name="dto">The data transfer object containing vital sign measurements.</param>
+            <returns>
+            Returns <see cref="T:Microsoft.AspNetCore.Mvc.OkResult"/> if the vital sign was saved successfully,  
+            <see cref="T:Microsoft.AspNetCore.Mvc.BadRequestObjectResult"/> if the model state is invalid,  
+            or <see cref="T:Microsoft.AspNetCore.Mvc.NotFoundResult"/> if the patient does not exist.
+            </returns>
+            <response code="200">Vital sign submitted successfully.</response>
+            <response code="400">The submitted data was invalid.</response>
+            <response code="404">The specified patient was not found.</response>
+        </member>
+        <member name="T:HealthentiaVitalsDashboard.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:HealthentiaVitalsDashboard.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:HealthentiaVitalsDashboard.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:HealthentiaVitalsDashboard.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

@@ -1344,6 +1344,24 @@
       "Microsoft.EntityFrameworkCore.Analyzers/9.0.7": {
         "type": "package"
       },
+      "Microsoft.EntityFrameworkCore.InMemory/9.0.7": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "9.0.7",
+          "Microsoft.Extensions.Caching.Memory": "9.0.7",
+          "Microsoft.Extensions.Logging": "9.0.7"
+        },
+        "compile": {
+          "lib/net8.0/Microsoft.EntityFrameworkCore.InMemory.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.EntityFrameworkCore.InMemory.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.EntityFrameworkCore.Relational/9.0.7": {
         "type": "package",
         "dependencies": {
@@ -3227,6 +3245,7 @@
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.0",
           "Microsoft.AspNetCore.Identity.UI": "8.0.0",
           "Microsoft.EntityFrameworkCore": "9.0.7",
+          "Microsoft.EntityFrameworkCore.InMemory": "9.0.7",
           "Microsoft.EntityFrameworkCore.Sqlite": "9.0.7",
           "Microsoft.Extensions.Configuration.Abstractions": "9.0.7",
           "Microsoft.NET.Test.Sdk": "17.14.1",
@@ -5592,6 +5611,21 @@
         "docs/PACKAGE.md",
         "microsoft.entityframeworkcore.analyzers.9.0.7.nupkg.sha512",
         "microsoft.entityframeworkcore.analyzers.nuspec"
+      ]
+    },
+    "Microsoft.EntityFrameworkCore.InMemory/9.0.7": {
+      "sha512": "/EQbD4/m83r3AW4z69SIwjRvEPFJchhCIQ80DbUiw3H6T2fXEVCf6YjbBlLE6Q/syHYu2JYBScxyAQ4/q8J2xA==",
+      "type": "package",
+      "path": "microsoft.entityframeworkcore.inmemory/9.0.7",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "PACKAGE.md",
+        "lib/net8.0/Microsoft.EntityFrameworkCore.InMemory.dll",
+        "lib/net8.0/Microsoft.EntityFrameworkCore.InMemory.xml",
+        "microsoft.entityframeworkcore.inmemory.9.0.7.nupkg.sha512",
+        "microsoft.entityframeworkcore.inmemory.nuspec"
       ]
     },
     "Microsoft.EntityFrameworkCore.Relational/9.0.7": {
