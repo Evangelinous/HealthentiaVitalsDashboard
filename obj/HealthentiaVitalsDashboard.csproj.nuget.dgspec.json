@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/lina/HealthentiaVitalsDashboard/HealthentiaVitalsDashboard.csproj": {}
+    "/Users/lina/HealthentiaVitals/HealthentiaVitalsDashboard/HealthentiaVitalsDashboard.csproj": {}
   },
   "projects": {
-    "/Users/lina/HealthentiaVitalsDashboard/HealthentiaVitalsDashboard.csproj": {
+    "/Users/lina/HealthentiaVitals/HealthentiaVitalsDashboard/HealthentiaVitalsDashboard.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/lina/HealthentiaVitalsDashboard/HealthentiaVitalsDashboard.csproj",
+        "projectUniqueName": "/Users/lina/HealthentiaVitals/HealthentiaVitalsDashboard/HealthentiaVitalsDashboard.csproj",
         "projectName": "HealthentiaVitalsDashboard",
-        "projectPath": "/Users/lina/HealthentiaVitalsDashboard/HealthentiaVitalsDashboard.csproj",
+        "projectPath": "/Users/lina/HealthentiaVitals/HealthentiaVitalsDashboard/HealthentiaVitalsDashboard.csproj",
         "packagesPath": "/Users/lina/.nuget/packages/",
-        "outputPath": "/Users/lina/HealthentiaVitalsDashboard/obj/",
+        "outputPath": "/Users/lina/HealthentiaVitals/HealthentiaVitalsDashboard/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/lina/.nuget/NuGet/NuGet.Config"
@@ -84,17 +84,9 @@
               "target": "Package",
               "version": "[9.0.7, )"
             },
-            "Microsoft.NET.Test.Sdk": {
-              "target": "Package",
-              "version": "[17.14.1, )"
-            },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[9.0.0, )"
-            },
-            "Moq": {
-              "target": "Package",
-              "version": "[4.20.72, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -105,10 +97,6 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[6.0.4, )"
-            },
-            "xunit": {
-              "target": "Package",
-              "version": "[2.9.3, )"
             }
           },
           "imports": [

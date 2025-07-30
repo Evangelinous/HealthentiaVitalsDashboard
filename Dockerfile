@@ -1,31 +1,36 @@
-# Use the ASP.NET runtime as base image
+# Stage 1: Base runtime
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 5000
 
-# Use the SDK image to build the app
+# Stage 2: Build and test
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copy solution and project files
-COPY *.sln ./
-COPY HealthentiaVitalsDashboard.csproj ./
+COPY HealthentiaVitalsDashboard/HealthentiaVitalsDashboard.sln ./HealthentiaVitalsDashboard/
+COPY HealthentiaVitalsDashboard/HealthentiaVitalsDashboard.csproj ./HealthentiaVitalsDashboard/
+COPY HealthentiaVitalsDashboardTests/HealthentiaVitalsDashboard.Tests.csproj ./HealthentiaVitalsDashboardTests/
 
 # Restore dependencies
-RUN dotnet restore
+RUN dotnet restore HealthentiaVitalsDashboard/HealthentiaVitalsDashboard.sln
 
-# Copy everything and build
-COPY . ./
-RUN dotnet publish -c Release -o /app/publish
+# Copy the rest of the source code
+COPY HealthentiaVitalsDashboard/ ./HealthentiaVitalsDashboard/
+COPY HealthentiaVitalsDashboardTests/ ./HealthentiaVitalsDashboardTests/
 
-# Final runtime image
+# Run unit tests
+RUN dotnet test HealthentiaVitalsDashboardTests/HealthentiaVitalsDashboard.Tests.csproj --no-restore --verbosity normal
+
+# Publish the main app
+RUN dotnet publish HealthentiaVitalsDashboard/HealthentiaVitalsDashboard.csproj -c Release -o /app/publish
+
+# Stage 3: Final runtime image
 FROM base AS final
 WORKDIR /app
 COPY --from=build /app/publish .
-
-# Copy the SQLite database to container
-COPY app.db ./
-
+COPY HealthentiaVitalsDashboard/app.db ./
 ENTRYPOINT ["dotnet", "HealthentiaVitalsDashboard.dll"]
 
-ENV ASPNETCORE_URLS=http://0.0.0.0:5000
+EXPOSE 5050
+ENV ASPNETCORE_URLS=http://0.0.0.0:5050

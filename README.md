@@ -1,94 +1,108 @@
-# Healthentia Vitals Dashboard
 
-A real-time ASP.NET Core web application for monitoring patient vital signs using SignalR, Razor Pages, and SQLite.
+# HealthentiaVitalsDashboard
 
-## 🚀 Features
-
-- 📈 Real-time charts for Heart Rate, Blood Pressure & Oxygen Saturation (Chart.js)
-- 🩺 Patient vital data simulated and updated via background service
-- ✅ SignalR hub pushes live updates to all connected clients
-- 📊 Dynamic row highlighting based on vital status (Normal, Warning, Critical)
-- 🔒 User registration and login via ASP.NET Core Identity
-- 📦 Export patient vitals to CSV
+A real-time Patient Vital Signs Monitoring Dashboard built with **ASP.NET Core**, **SignalR**, and **Razor Pages**. This project displays patient data such as heart rate, temperature, and oxygen saturation, and updates them in real time.
 
 ---
 
-## 🛠 Technologies
+## 🩺 Project Idea
 
-- ASP.NET Core 8.0 (Razor Pages)
-- Entity Framework Core + SQLite
-- SignalR (real-time communication)
-- Chart.js (frontend chart rendering)
-- Bootstrap 5 (styling)
-- xUnit + Coverlet (unit testing & code coverage)
+The dashboard simulates real-time health monitoring, making it useful for:
+- Demonstrations of patient telemetry in hospitals.
+- Educational purposes in biomedical and software engineering.
+- Prototypes for IoT-based healthcare platforms.
 
 ---
 
-## 🧪 Testing
+## Technologies Used
 
-Unit tests cover all business logic including status evaluation.
+- **.NET 8** with ASP.NET Core Web App (Razor Pages)
+- **SignalR** for real-time updates
+- **Entity Framework Core** with **SQLite** as database
+- **BackgroundService** for simulating vital updates
+- **xUnit** for unit testing
+- **Docker** for containerization
 
-### Run Tests
+---
 
-```bash
-dotnet test --collect:"XPlat Code Coverage"
+## Project Structure
+
+```
+HealthentiaVitalsDashboard/
+├── Controllers/
+├── Data/
+├── Hubs/
+├── Models/
+├── Pages/
+├── Services/
+├── app.db                # SQLite database
+├── Program.cs
+├── Startup.cs (if present)
+├── HealthentiaVitalsDashboard.csproj
+├── Dockerfile
+HealthentiaVitalsDashboard.Tests/
+├── ...                   # xUnit test project
+HealthentiaVitalsDashboard.sln
 ```
 
 ---
 
-## 📦 Running the Project
+## Run the project locally
 
-### 1. Restore packages
+### Prerequisites
+- .NET 8 SDK
+- SQLite (optional – DB is auto-created)
+- Docker (for containerized run)
 
+### 1. Run Locally (without Docker)
 ```bash
-dotnet restore
-```
-
-### 2. Apply migrations (if needed)
-
-```bash
-dotnet ef database update
-```
-
-### 3. Run the app
-
-```bash
+cd HealthentiaVitalsDashboard
+dotnet build
 dotnet run
 ```
 
-App will be available at `https://localhost:PORT`.
+The app will run on:  
+[http://localhost:5228](http://localhost:5228)
 
 ---
 
-## 🐳 Docker
+### 2. Run via Docker
 
-You can also run the app via Docker:
-
+#### Build the Docker image:
 ```bash
-docker build -t healthentia-dashboard .
+docker build -t healthentia-dashboard -f HealthentiaVitalsDashboard/Dockerfile .
+```
+
+#### Run the container:
+```bash
 docker run -p 5050:5050 healthentia-dashboard
 ```
 
-Then visit: [http://localhost:5050](http://localhost:5050)
+The app will now be accessible at:  
+[http://localhost:5050](http://localhost:5050)
 
 ---
 
-## 📁 Project Structure
+## Run Unit Tests
 
+You can run unit tests directly from the command line:
+
+```bash
+dotnet test HealthentiaVitalsDashboard.Tests/HealthentiaVitalsDashboard.Tests.csproj
 ```
-├── Areas/Identity/Pages/Account        # Identity UI (Register/Login)
-├── Controllers/                        # REST API controllers
-├── Hubs/                               # SignalR hub
-├── Models/                             # Entity models
-├── Services/                           # Business logic services
-├── Views/                              # Razor views
-├── wwwroot/                            # Static files
-├── Data/                               # EF Core DbContext
-├── appsettings.json                    # Configuration
-```
+
+Or as part of the Docker build (already included in the Dockerfile).
 
 ---
 
-## 📄 License
+## Notes
 
-This project is licensed under the MIT License.
+- The app includes a pre-seeded list of patients and simulates live vital changes.
+- SignalR pushes these changes to the frontend in real time.
+- Data is displayed in tables and optionally via charts.
+
+---
+
+## License
+
+This project is for educational and demo purposes.
