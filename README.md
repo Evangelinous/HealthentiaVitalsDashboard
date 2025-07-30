@@ -74,6 +74,7 @@ dotnet run
 The app will run on:  
 [http://localhost:5228](http://localhost:5228)
 
+Swagger UI: http://localhost:5228/swagger
 ---
 
 ### 2. Run via Docker
