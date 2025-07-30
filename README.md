@@ -5,7 +5,7 @@ A real-time Patient Vital Signs Monitoring Dashboard built with **ASP.NET Core**
 
 ---
 
-## 🩺 Project Idea
+## Project Idea
 
 The dashboard simulates real-time health monitoring, making it useful for:
 - Demonstrations of patient telemetry in hospitals.
@@ -74,7 +74,23 @@ dotnet run
 The app will run on:  
 [http://localhost:5228](http://localhost:5228)
 
-Swagger UI: http://localhost:5228/swagger
+Available Swagger APIs
+
+The application exposes the following documented APIs (via Swagger):
+
+Auth
+	•	POST /api/Auth/login: Authenticate using email/password → returns JWT token.
+
+Patient Vitals
+	•	POST /patientvitals/{id}/vitals: Submits a new vital sign record for a specific patient.
+
+Each endpoint is secured and tested. To interact, first Authorize using your JWT from /api/Auth/login.
+
+You can test and explore all APIs using Swagger here:
+	•	http://localhost:5228/swagger (local)
+	•	http://localhost:5050/swagger (Docker)
+
+    
 ---
 
 ### 2. Run via Docker
