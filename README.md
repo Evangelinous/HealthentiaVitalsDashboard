@@ -27,7 +27,9 @@ The dashboard simulates real-time health monitoring, making it useful for:
 ##  Clone it locally with Git:
 
 git clone https://github.com/Evangelinous/HealthentiaVitalsDashboard.git
+
 ---
+
 ## Project Structure
 
 ```
