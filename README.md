@@ -61,6 +61,11 @@ HealthentiaVitalsDashboard.sln
 
 ### 1. Run Locally (without Docker)
 ```bash
+
+dotnet run --project HealthentiaVitalsDashboard/HealthentiaVitalsDashboard.csproj
+
+OR go inside the project and 
+
 cd HealthentiaVitalsDashboard
 dotnet build
 dotnet run
